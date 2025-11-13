@@ -80,7 +80,7 @@ function EducationPage() {
 
   return (
     <div>
-      <h2 style={{ marginBottom: "20px" }}>Add your education details</h2>
+      <h2 style={{ marginBottom: "20px" }}>Add your Education Details</h2>
 
       {/* Form */}
       <div

@@ -74,7 +74,7 @@ function App(){
   return (
      <div className="builder-container">
 
-      <h1 className="heading">RESUME GENRATOR</h1>
+      <h1 className="heading">RESUME GENERATOR</h1>
       <Stepper className="stepper"/>
 
       {renderPage()}

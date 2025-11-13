@@ -65,7 +65,7 @@ function ProjectsPage() {
 
   return (
     <div>
-      <h2 style={{ marginBottom: "20px" }}>Mini Project Section</h2>
+      <h2 style={{ marginBottom: "20px" }}>Add your Mini Projects</h2>
 
       {/* Form */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "15px" }}>
