@@ -44,6 +44,10 @@ function SkillsPage() {
         {skills.length}
       </div>
 
+      <h3>Added Skills</h3>
+
+<div className="visible-counter">{skills.length}</div>
+
       <div style={{ marginTop: "20px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
         {skills.map((item, idx) => (
           <div key={item.id} style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "6px", display: "flex", gap: "10px" }}>

@@ -45,9 +45,10 @@ function ProjectsPage() {
         {editId ? "Update Project" : "Add Project"}
       </button>
 
-      <div data-testid="projects-count" style={{ display: "none" }}>
-        {projects.length}
-      </div>
+     <h3>Added Projects</h3>
+
+<div className="visible-counter">{projects.length}</div>
+
 
       <ul style={{ marginTop: "20px" }}>
         {projects.map((item, idx) => (

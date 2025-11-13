@@ -38,7 +38,7 @@ function EducationPage() {
   };
 
   return (
-    <div>
+    <div className="makeStyles-instance-16"> 
       <h2>Add your Education Details</h2>
 
       <div style={{ display: "grid", gap: "15px", gridTemplateColumns: "1fr 1fr" }}>

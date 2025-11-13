@@ -41,9 +41,10 @@ function SocialPage() {
         </button>
       </div>
 
-      <div data-testid="social-count" style={{ display: "none" }}>
-        {social.length}
-      </div>
+     <h3>Added Social Links</h3>
+
+<div className="visible-counter">{social.length}</div>
+
 
       <ul style={{ marginTop: "15px" }}>
         {social.map((item, idx) => (
