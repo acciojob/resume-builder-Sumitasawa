@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addProject,
-  updateProject,
-  deleteProject
-} from "../store/resumeSlice";
+import { addProject, updateProject, deleteProject } from "../store/resumeSlice";
 
 function ProjectsPage() {
   const dispatch = useDispatch();
-  const projectList = useSelector((state) => state.resume.projects);
+  const projects = useSelector((s) => s.resume.projects);
 
   const [form, setForm] = useState({
     projectName: "",
@@ -16,138 +12,55 @@ function ProjectsPage() {
     description: "",
   });
 
-  const [editingId, setEditingId] = useState(null);
+  const [editId, setEditId] = useState(null);
 
-  // Handle input changes
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const change = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-  // Add or update
-  const handleAdd = () => {
-    const { projectName, techStack, description } = form;
+  const save = () => {
+    if (!form.projectName || !form.techStack || !form.description)
+      return alert("Fill all fields");
 
-    if (!projectName || !techStack || !description) {
-      alert("Please fill all fields!");
-      return;
-    }
-
-    if (editingId) {
-      // Update existing
-      dispatch(updateProject({ id: editingId, ...form }));
-      setEditingId(null);
+    if (editId) {
+      dispatch(updateProject({ id: editId, ...form }));
+      setEditId(null);
     } else {
-      // Add new
       dispatch(addProject(form));
     }
 
-    // Reset form
     setForm({ projectName: "", techStack: "", description: "" });
-  };
-
-  // Edit a specific project
-  const handleEdit = (item) => {
-    setEditingId(item.id);
-    setForm({
-      projectName: item.projectName,
-      techStack: item.techStack,
-      description: item.description,
-    });
-  };
-
-  // Delete
-  const handleDelete = (id) => {
-    dispatch(deleteProject(id));
   };
 
   return (
     <div>
-      <h2 style={{ marginBottom: "20px" }}>Add your Mini Projects</h2>
+      <h2>Mini Project</h2>
 
-      {/* Form */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "15px" }}>
-
-        <input
-          name="projectName"
-          placeholder="Project Name"
-          value={form.projectName}
-          onChange={handleChange}
-          className="inputBox"
-        />
-
-        <input
-          name="techStack"
-          placeholder="Tech Stack (e.g., React, Node, MongoDB)"
-          value={form.techStack}
-          onChange={handleChange}
-          className="inputBox"
-        />
-
-        <textarea
-          name="description"
-          placeholder="Short project description"
-          value={form.description}
-          onChange={handleChange}
-          className="inputBox"
-          rows="3"
-        ></textarea>
+      <div style={{ display: "grid", gap: "15px" }}>
+        <input name="projectName" value={form.projectName} onChange={change} className="inputBox" placeholder="Project Name" />
+        <input name="techStack" value={form.techStack} onChange={change} className="inputBox" placeholder="Tech Stack" />
+        <textarea name="description" value={form.description} onChange={change} className="inputBox" placeholder="Description"></textarea>
       </div>
 
-      {/* Add Button */}
-      <button
-        id="add_project"
-        onClick={handleAdd}
-        style={{ padding: "8px 20px", cursor: "pointer", marginTop: "10px" }}
-      >
-        {editingId ? "Update Project" : "Add Project"}
+      <button id="add_project" onClick={save} style={{ marginTop: "10px" }}>
+        {editId ? "Update Project" : "Add Project"}
       </button>
 
-      <hr style={{ margin: "20px 0" }} />
+      <div data-testid="projects-count" style={{ display: "none" }}>
+        {projects.length}
+      </div>
 
-      {/* Project List */}
-      <h3>Added Projects</h3>
+      <ul style={{ marginTop: "20px" }}>
+        {projects.map((item, idx) => (
+          <li key={item.id} style={{ border: "1px solid #ccc", padding: "12px", marginBottom: "10px", borderRadius: "6px" }}>
+            <strong>{idx + 1}. {item.projectName}</strong>
+            <br />
+            <em>{item.techStack}</em>
+            <br />
+            {item.description}
 
-      {projectList.length === 0 && <p>No projects added yet.</p>}
-
-      <ul style={{ marginTop: "15px" }}>
-        {projectList.map((item) => (
-          <li
-            key={item.id}
-            style={{
-              padding: "12px",
-              border: "1px solid #ccc",
-              marginBottom: "12px",
-              borderRadius: "6px",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <div>
-              <strong>{item.projectName}</strong>
-              <br />
-              <em>{item.techStack}</em>
-              <br />
-              <span>{item.description}</span>
-            </div>
-
-            <div>
-              <button
-                style={{ marginRight: "10px" }}
-                onClick={() => handleEdit(item)}
-              >
-                Edit
-              </button>
-
-              <button
-                id="delete"
-                onClick={() => handleDelete(item.id)}
-                style={{ backgroundColor: "red", color: "white" }}
-              >
-                Delete
-              </button>
+            <div style={{ marginTop: "10px" }}>
+              <button onClick={() => { setForm(item); setEditId(item.id); }}>Edit</button>
+              <button id="delete" onClick={() => dispatch(deleteProject(item.id))} style={{ marginLeft: "10px", background: "red", color: "white" }}>Delete</button>
             </div>
           </li>
         ))}

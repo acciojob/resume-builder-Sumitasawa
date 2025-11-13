@@ -1,133 +1,59 @@
-import React,{useState,useEffect} from 'react'
-import { useSelector,useDispatch } from 'react-redux'
-import { setProfile } from '../store/resumeSlice'
-import '../styles/App.css'
-const ProfilePage = () => {
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setProfile } from "../store/resumeSlice";
 
-  const dispatch=useDispatch();
-  const profile=useSelector((state)=>state.resume.profile);
+function ProfilePage() {
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.resume.profile);
 
-  const [form,setForm]=useState({
-    fname:"",
-    lname:"",
-    phone:"",
-    address:"",
-    url:"",
-    image:"",
-  });
+  const [form, setForm] = useState(profile);
 
-  useEffect(()=>{
+  useEffect(() => {
     setForm(profile);
-  },[profile]);
+  }, [profile]);
 
-  const handleChange=(e)=>{
-    setForm({
-      ...form,
-      [e.target.name]:e.target.value,
-    })
-  }
+  const change = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleImage = (e) => {
+  const uploadImage = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
-    reader.onload = () => {
-      setForm({
-        ...form,
-        image: reader.result,
-      });
-    };
+    reader.onload = () =>
+      setForm({ ...form, image: reader.result });
     reader.readAsDataURL(file);
-  };  
+  };
 
-  const saveProfile = () => {
+  const save = () => {
     dispatch(setProfile(form));
     alert("Profile Saved!");
   };
 
-
   return (
-    <div className='profile-sectio'>
-        <h1 className='profile-heading'>Add your profile details</h1>
+    <div>
+      <h2>Profile Details</h2>
 
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:15}}>
+      <div style={{ display: "grid", gap: "15px", gridTemplateColumns: "1fr 1fr" }}>
+        <input id="fname" name="fname" placeholder="First Name" className="inputBox" value={form.fname} onChange={change} />
+        <input id="lname" name="lname" placeholder="Last Name" className="inputBox" value={form.lname} onChange={change} />
+        <input id="phone" name="phone" placeholder="Phone" className="inputBox" value={form.phone} onChange={change} />
+        <input id="address" name="address" placeholder="Address" className="inputBox" value={form.address} onChange={change} />
+        
+        <input id="url" name="url" placeholder="Website URL" className="inputBox" style={{ gridColumn: "span 2" }} value={form.url} onChange={change} />
 
-        <input
-        name='fname'
-        placeholder='First Name'
-        value={form.fname}
-        onChange={handleChange}
-        className='inputBox'
-        /> 
-
-        <input
-          name='lname'
-          placeholder='Last Name'
-          value={form.lname}
-          onChange={handleChange}
-          className='inputBox'
-        />
-
-        <input
-          name='phone'
-          placeholder='Phone'
-          value={form.phone}
-          onChange={handleChange}
-          className='inputBox'
-        />
-
-        <input
-          name='address'
-          value={form.address}
-          placeholder='Address'
-          className='inputBox'
-        />
-
-        <input
-        name='url'
-        value={form.url}
-         placeholder="Portfolio / Website URL"
-         onChange={handleChange}
-          className="inputBox"
-          style={{ gridColumn: "span 2" }}
-        />
-
-        <div style={{gridColumn:"span 2"}} className='img-div'>
-        <label>Profile Image</label>
-        <br></br>
-        <input type="file" accept='image' onChange={handleImage}/>
-
-        {form.image && (
-          <div style={{margin:10}}>
-            <img
-              src={form.image}
-              alt='Profile'
-               style={{
-                  width: 120,
-                  height: 120,
-                  borderRadius: "8px",
-                  objectFit: "cover",
-                }}
-            />
-
-          </div>
-        )}
+        <div style={{ gridColumn: "span 2" }}>
+          <input type="file" accept="image/*" onChange={uploadImage} />
+          {form.image && (
+            <img src={form.image} alt="" style={{ width: "120px", marginTop: "10px", borderRadius: "8px" }} />
+          )}
         </div>
       </div>
 
-       <button
-        onClick={saveProfile}
-        style={{
-          padding: "8px 20px",
-          marginTop: 20,
-          cursor: "pointer",
-        }}
-      >
+      <button style={{ marginTop: "15px" }} onClick={save}>
         Save Profile
       </button>
     </div>
-  )
+  );
 }
 
-export default ProfilePage
+export default ProfilePage;

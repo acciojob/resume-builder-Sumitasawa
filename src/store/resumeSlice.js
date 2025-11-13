@@ -6,9 +6,8 @@ const initialState = {
     lname: "",
     phone: "",
     address: "",
-    url:"",
+    url: "",
     image: "",
-
   },
   education: [],
   skills: [],
@@ -29,91 +28,74 @@ const resumeSlice = createSlice({
       state.education.push({ id: Date.now(), ...action.payload });
     },
     updateEducation(state, action) {
-      const index = state.education.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.education[index] = action.payload;
-      }
+      const i = state.education.findIndex((x) => x.id === action.payload.id);
+      if (i !== -1) state.education[i] = action.payload;
     },
     deleteEducation(state, action) {
-      state.education = state.education.filter(
-        (item) => item.id !== action.payload
-      );
+      state.education = state.education.filter((x) => x.id !== action.payload);
     },
 
     addSkill(state, action) {
       state.skills.push({ id: Date.now(), ...action.payload });
     },
     updateSkill(state, action) {
-      const index = state.skills.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.skills[index] = action.payload;
-      }
+      const i = state.skills.findIndex((x) => x.id === action.payload.id);
+      if (i !== -1) state.skills[i] = action.payload;
     },
     deleteSkill(state, action) {
-      state.skills = state.skills.filter((item) => item.id !== action.payload);
+      state.skills = state.skills.filter((x) => x.id !== action.payload);
     },
 
-     addProject(state, action) {
+    addProject(state, action) {
       state.projects.push({ id: Date.now(), ...action.payload });
     },
     updateProject(state, action) {
-      const index = state.projects.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.projects[index] = action.payload;
-      }
+      const i = state.projects.findIndex((x) => x.id === action.payload.id);
+      if (i !== -1) state.projects[i] = action.payload;
     },
     deleteProject(state, action) {
-      state.projects = state.projects.filter(
-        (item) => item.id !== action.payload
-      );
+      state.projects = state.projects.filter((x) => x.id !== action.payload);
     },
 
-
-      addSocial(state, action) {
+    addSocial(state, action) {
       state.social.push({ id: Date.now(), ...action.payload });
     },
     updateSocial(state, action) {
-      const index = state.social.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.social[index] = action.payload;
-      }
+      const i = state.social.findIndex((x) => x.id === action.payload.id);
+      if (i !== -1) state.social[i] = action.payload;
     },
     deleteSocial(state, action) {
-      state.social = state.social.filter(
-        (item) => item.id !== action.payload
-      );
+      state.social = state.social.filter((x) => x.id !== action.payload);
     },
-    
-
 
     setPage(state, action) {
       state.page = action.payload;
     },
+
     loadState(state, action) {
       return { ...state, ...action.payload };
     },
-    reset(state) {
+
+    reset() {
       return initialState;
-    }
+    },
   },
 });
 
-
-
 export const {
   setProfile,
-  addEducation, updateEducation, deleteEducation,
-  addSkill, updateSkill, deleteSkill,
-  addProject, updateProject, deleteProject,
-  addSocial, updateSocial, deleteSocial,
+  addEducation,
+  updateEducation,
+  deleteEducation,
+  addSkill,
+  updateSkill,
+  deleteSkill,
+  addProject,
+  updateProject,
+  deleteProject,
+  addSocial,
+  updateSocial,
+  deleteSocial,
   setPage,
   loadState,
   reset,

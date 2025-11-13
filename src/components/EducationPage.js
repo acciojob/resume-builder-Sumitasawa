@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addEducation,
-  updateEducation,
-  deleteEducation
-} from "../store/resumeSlice";
+import { addEducation, updateEducation, deleteEducation } from "../store/resumeSlice";
 
 function EducationPage() {
   const dispatch = useDispatch();
-  const educationList = useSelector((state) => state.resume.education);
+  const items = useSelector((s) => s.resume.education);
 
   const [form, setForm] = useState({
     courseName: "",
@@ -17,43 +13,22 @@ function EducationPage() {
     percentage: "",
   });
 
-  const [editingId, setEditingId] = useState(null);
+  const [editId, setEditId] = useState(null);
 
-  // Handle inputs
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const change = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-  // Add or update entry
-  const handleAdd = () => {
-    if (
-      !form.courseName ||
-      !form.completionYear ||
-      !form.college ||
-      !form.percentage
-    ) {
-      alert("Please fill all fields");
-      return;
-    }
+  const save = () => {
+    if (!form.courseName || !form.college)
+      return alert("Fill all fields");
 
-    if (editingId) {
-      // Update existing entry
-      dispatch(
-        updateEducation({
-          id: editingId,
-          ...form,
-        })
-      );
-      setEditingId(null);
+    if (editId) {
+      dispatch(updateEducation({ id: editId, ...form }));
+      setEditId(null);
     } else {
-      // Add new entry
       dispatch(addEducation(form));
     }
 
-    // Reset form
     setForm({
       courseName: "",
       completionYear: "",
@@ -62,120 +37,40 @@ function EducationPage() {
     });
   };
 
-  // Load data into form for editing
-  const handleEdit = (item) => {
-    setEditingId(item.id);
-    setForm({
-      courseName: item.courseName,
-      completionYear: item.completionYear,
-      college: item.college,
-      percentage: item.percentage,
-    });
-  };
-
-  // Delete
-  const handleDelete = (id) => {
-    dispatch(deleteEducation(id));
-  };
-
   return (
     <div>
-      <h2 style={{ marginBottom: "20px" }}>Add your Education Details</h2>
+      <h2>Education Details</h2>
 
-      {/* Form */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "15px",
-          marginBottom: "20px",
-        }}
-      >
-        <input
-          name="courseName"
-          placeholder="Course Name"
-          value={form.courseName}
-          onChange={handleChange}
-          className="inputBox"
-        />
-
-        <input
-          name="completionYear"
-          placeholder="Completion Year (e.g., 2024)"
-          value={form.completionYear}
-          onChange={handleChange}
-          className="inputBox"
-        />
-
-        <input
-          name="college"
-          placeholder="College Name"
-          value={form.college}
-          onChange={handleChange}
-          className="inputBox"
-          style={{ gridColumn: "span 2" }}
-        />
-
-        <input
-          name="percentage"
-          placeholder="Percentage / CGPA"
-          value={form.percentage}
-          onChange={handleChange}
-          className="inputBox"
-        />
+      <div style={{ display: "grid", gap: "15px", gridTemplateColumns: "1fr 1fr" }}>
+        <input name="courseName" placeholder="Course" value={form.courseName} onChange={change} className="inputBox" />
+        <input name="completionYear" placeholder="Year" value={form.completionYear} onChange={change} className="inputBox" />
+        <input name="college" placeholder="College" value={form.college} onChange={change} className="inputBox" style={{ gridColumn: "span 2" }} />
+        <input name="percentage" placeholder="Percentage" value={form.percentage} onChange={change} className="inputBox" />
       </div>
 
-      <button
-        id="add_education"
-        onClick={handleAdd}
-        style={{ padding: "8px 20px", cursor: "pointer" }}
-      >
-        {editingId ? "Update Education" : "Add Education"}
+      <button id="add_education" onClick={save} style={{ marginTop: "10px" }}>
+        {editId ? "Update" : "Add Education"}
       </button>
 
-      <hr style={{ margin: "20px 0" }} />
+      <div data-testid="education-count" style={{ display: "none" }}>
+        {items.length}
+      </div>
 
-      {/* Education list */}
-      <h3>Added Education</h3>
-
-      {educationList.length === 0 && <p>No education added yet.</p>}
-
-      <ul style={{ marginTop: "15px" }}>
-        {educationList.map((item) => (
+      <ul style={{ marginTop: "20px" }}>
+        {items.map((item, idx) => (
           <li
             key={item.id}
-            style={{
-              padding: "10px",
-              border: "1px solid #ccc",
-              marginBottom: "10px",
-              borderRadius: "6px",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
+            style={{ border: "1px solid #ccc", padding: "12px", marginBottom: "10px", borderRadius: "6px" }}
           >
-            <div>
-              <strong>{item.courseName}</strong> ({item.completionYear})
-              <br />
-              {item.college}
-              <br />
-              Percentage: {item.percentage}
-            </div>
+            <strong>{idx + 1}. {item.courseName}</strong> ({item.completionYear})
+            <br />
+            {item.college}
+            <br />
+            {item.percentage}
 
-            <div>
-              <button
-                style={{ marginRight: "10px" }}
-                onClick={() => handleEdit(item)}
-              >
-                Edit
-              </button>
-
-              <button
-                id="delete"
-                onClick={() => handleDelete(item.id)}
-                style={{ backgroundColor: "red", color: "white" }}
-              >
-                Delete
-              </button>
+            <div style={{ marginTop: "10px" }}>
+              <button onClick={() => { setForm(item); setEditId(item.id); }}>Edit</button>
+              <button id="delete" onClick={() => dispatch(deleteEducation(item.id))} style={{ marginLeft: "10px", background: "red", color: "white" }}>Delete</button>
             </div>
           </li>
         ))}

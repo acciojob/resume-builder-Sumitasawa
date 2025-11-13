@@ -2,126 +2,75 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 function ResumePreview() {
-  const resume = useSelector((state) => state.resume);
+  const r = useSelector((s) => s.resume);
 
   return (
-    <div
-      id="resume-preview"
-      style={{
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "6px",
-        background: "white",
-        maxWidth: "700px",
-      }}
-    >
-      {/* ================= PROFILE ================= */}
+    <div id="resume-preview" style={{ padding: "20px", border: "1px solid #ccc", borderRadius: "6px", background: "white" }}>
+      {/* PROFILE */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
-          <h2 style={{ margin: 0 }}>
-            {resume.profile.fname} {resume.profile.lname}
-          </h2>
-          <p style={{ margin: "3px 0" }}>{resume.profile.phone}</p>
-          <p style={{ margin: "3px 0" }}>{resume.profile.address}</p>
-
-          {resume.profile.url && (
-            <a href={resume.profile.url} target="_blank" rel="noreferrer">
-              {resume.profile.url}
-            </a>
-          )}
+          <h2>{r.profile.fname} {r.profile.lname}</h2>
+          <p>{r.profile.phone}</p>
+          <p>{r.profile.address}</p>
+          <a href={r.profile.url}>{r.profile.url}</a>
         </div>
 
-        {resume.profile.image && (
-          <img
-            src={resume.profile.image}
-            alt="profile"
-            style={{
-              width: "120px",
-              height: "120px",
-              borderRadius: "10px",
-              objectFit: "cover",
-            }}
-          />
+        {r.profile.image && (
+          <img src={r.profile.image} alt="" style={{ width: "120px", height: "120px", borderRadius: "8px" }} />
         )}
       </div>
 
-      <hr style={{ margin: "20px 0" }} />
+      <hr />
 
-      {/* ================= EDUCATION ================= */}
-      <h3 style={{ marginBottom: "10px" }}>Education</h3>
-      {resume.education.length === 0 ? (
-        <p>No education added yet.</p>
-      ) : (
-        <ul>
-          {resume.education.map((item) => (
-            <li key={item.id} style={{ marginBottom: "8px" }}>
-              <strong>{item.courseName}</strong> ({item.completionYear})  
-              <br />
-              {item.college}  
-              <br />
-              <em>Percentage:</em> {item.percentage}
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* EDUCATION */}
+      <h3>Education</h3>
+      <ul>
+        {r.education.map((e) => (
+          <li key={e.id}>
+            {e.courseName} ({e.completionYear})  
+            <br />{e.college}  
+            <br />Percentage: {e.percentage}
+          </li>
+        ))}
+      </ul>
 
-      <hr style={{ margin: "20px 0" }} />
+      <hr />
 
-      {/* ================= SKILLS ================= */}
-      <h3 style={{ marginBottom: "10px" }}>Skills</h3>
-      {resume.skills.length === 0 ? (
-        <p>No skills added yet.</p>
-      ) : (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-          {resume.skills.map((item) => (
-            <span
-              key={item.id}
-              style={{
-                padding: "6px 12px",
-                border: "1px solid #aaa",
-                borderRadius: "6px",
-                background: "#f8f8f8",
-              }}
-            >
-              {item.skill}
-            </span>
-          ))}
-        </div>
-      )}
+      {/* SKILLS */}
+      <h3>Skills</h3>
+      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+        {r.skills.map((s) => (
+          <div key={s.id} style={{ padding: "6px 12px", border: "1px solid #aaa", borderRadius: "6px" }}>
+            {s.skill}
+          </div>
+        ))}
+      </div>
 
-      <hr style={{ margin: "20px 0" }} />
+      <hr />
 
-      {/* ================= PROJECTS ================= */}
-      <h3 style={{ marginBottom: "10px" }}>Projects</h3>
-      {resume.projects.length === 0 ? (
-        <p>No projects added yet.</p>
-      ) : (
-        <ul>
-          {resume.projects.map((item) => (
-            <li key={item.id} style={{ marginBottom: "10px" }}>
-              <strong>{item.projectName}</strong>
-              <br />
-              <em>{item.techStack}</em>
-              <br />
-              <span>{item.description}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* PROJECTS */}
+      <h3>Projects</h3>
+      <ul>
+        {r.projects.map((p) => (
+          <li key={p.id}>
+            <strong>{p.projectName}</strong>
+            <br />
+            <em>{p.techStack}</em>
+            <br />
+            {p.description}
+          </li>
+        ))}
+      </ul>
 
-      <hr style={{ margin: "20px 0" }} />
+      <hr />
 
-      
-      <h3 style={{ marginBottom: "10px" }}>Social Links</h3>
-      {resume.social.length === 0 ? (
-        <p>No social links added yet.</p>
-      ) : (
-        <ul>
-          {resume.social.map((item) => (
-            <li key={item.id}>{item.Social}</li>
-          ))}
-        </ul>
-      )}
+      {/* SOCIAL */}
+      <h3>Social Links</h3>
+      <ul>
+        {r.social.map((s) => (
+          <li key={s.id}>{s.Social}</li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -5,6 +5,102 @@
 }
 
 
+/* Inputs */
+.inputBox {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.inputBox:focus {
+  border-color: #3b50ce;
+}
+
+/* Stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  margin-left: 200px;
+}
+
+.step-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.step-circle {
+  width: 32px;
+  height: 32px;
+  background: #bfbfbf;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.step-circle.active {
+  background: #3b50ce;
+}
+
+.step-label {
+  margin-left: 8px;
+  margin-right: 20px;
+  color: gray;
+}
+
+.step-label.active-label {
+  color: black;
+  font-weight: bold;
+}
+
+.step-line {
+  width: 70px;
+  height: 2px;
+  background: #ccc;
+  margin-right: 20px;
+}
+
+/* Bottom Buttons */
+.button-div {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: ghostwhite;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-div button {
+  width: 100px;
+  height: 40px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#next {
+  background: palevioletred;
+  color: white;
+  border: none;
+}
+
+#back {
+  background: lightgray;
+}
+
+#save_continue {
+  background: steelblue;
+  color: white;
+  border: none;
+}
+
+
 .heading{
     display: flex;
     text-align: center;
@@ -75,6 +171,9 @@
 #back {
     background-color: lightgray;
 }
+
+
+
 #save_continue {
     background-color: steelblue;
     color: white;
