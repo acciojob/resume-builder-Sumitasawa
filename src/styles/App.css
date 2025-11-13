@@ -1,1 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+
+.heading{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    background-color: palevioletred;
+    color: white;
+    padding: 10px;
+}
+
+
+.stepper{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-heading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: grey;
+}
+
+.inputBox{
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 40px;
+}
+
+.img-div{
+    margin-left: 20px;
+    height: 40px;
+}
+
+
+.button-div {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    background-color: ghostwhite;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+/* All buttons */
+.button-div button {
+    width: 100px;
+    height: 40px;   /* FIXED -> px */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* NEXT button styling */
+#next {
+    background-color: palevioletred;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+/* BACK button */
+#back {
+    background-color: lightgray;
+}
+#save_continue {
+    background-color: steelblue;
+    color: white;
+    border: none;
+}
