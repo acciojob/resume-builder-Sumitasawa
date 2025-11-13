@@ -33,7 +33,7 @@ function ProjectsPage() {
 
   return (
     <div>
-      <h2>Mini Project</h2>
+      <h2>Add your Mini Projects</h2>
 
       <div style={{ display: "grid", gap: "15px" }}>
         <input name="projectName" value={form.projectName} onChange={change} className="inputBox" placeholder="Project Name" />

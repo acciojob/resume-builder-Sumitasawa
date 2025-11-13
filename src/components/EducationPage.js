@@ -39,7 +39,7 @@ function EducationPage() {
 
   return (
     <div>
-      <h2>Education Details</h2>
+      <h2>Add your Education Details</h2>
 
       <div style={{ display: "grid", gap: "15px", gridTemplateColumns: "1fr 1fr" }}>
         <input name="courseName" placeholder="Course" value={form.courseName} onChange={change} className="inputBox" />

@@ -31,7 +31,7 @@ function ProfilePage() {
 
   return (
     <div>
-      <h2>Profile Details</h2>
+      <h2>Add your profile details</h2>
 
       <div style={{ display: "grid", gap: "15px", gridTemplateColumns: "1fr 1fr" }}>
         <input id="fname" name="fname" placeholder="First Name" className="inputBox" value={form.fname} onChange={change} />
